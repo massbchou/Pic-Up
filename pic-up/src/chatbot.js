@@ -69,3 +69,5 @@ async function openaiAPI(inputPrompt, type, instruction, maxTokens, temperature)
 function constructMessageObj(role, content){
     return {"role": role, "content": content}
   }
+
+export { openaiAPI };
