@@ -1,0 +1,14 @@
+{
+  "name": "pic-up-test",
+  "version": "1.0.0",
+  "description": "Test of the computer vision part of the Pic-Up Hackathon project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "James Grassi",
+  "license": "ISC",
+  "dependencies": {
+    "@google-cloud/vision": "^4.0.2"
+  }
+}
