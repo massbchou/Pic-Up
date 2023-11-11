@@ -18,7 +18,7 @@ async function analyse_image(trash) {
     labels.forEach(label => label_data.push(label.description));
     logos.forEach(logo => logo_data.push(logo.description));
 
-    return [label_data, logo_data, text_data];
+    return [label_data, logo_data];
 
   }
 
