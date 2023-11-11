@@ -12,17 +12,14 @@ async function analyse_image(trash) {
     const [logo_result] = await client.logoDetection(trash);
     const logos = logo_result.logoAnnotations;
 
-    label_words = [];
-    logo_words = [];
+    label_data = [];
+    logo_data = [];
 
-    labels.forEach(label => label_words.push(label.description));
-    logos.forEach(logo => logo_words.push(logo.description));
-    
-    //console.log('Labels:');
-    //labels.forEach(label => console.log(label.description));
+    labels.forEach(label => label_data.push(label.description));
+    logos.forEach(logo => logo_data.push(logo.description));
 
-    return [label_words, logo_words];
+    return [label_data, logo_data, text_data];
 
   }
 
-analyse_image('./images/doritos.jpg').then((data) => console.log(data));
+analyse_image('./images/doritos.jpg').then((data) => data.forEach(datum => console.log(datum)));
