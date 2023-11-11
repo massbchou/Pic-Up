@@ -67,7 +67,9 @@
     "type-is": "^1.6.18",
     "unpipe": "^1.0.0",
     "utils-merge": "^1.0.1",
-    "vary": "^1.1.2"
+    "vary": "^1.1.2",
+    "dotenv": "^16.3.1",
+    "openai": "^4.17.4"
   },
   "devDependencies": {},
   "scripts": {
