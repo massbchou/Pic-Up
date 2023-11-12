@@ -32,7 +32,9 @@ app.get('/identify-image', async (req, res) => {
     // request should contain the image in the data
     console.log(req.body);
     console.log('got something! (hopefully an image)');
-    //const [labels, logos] = await analyse_image('path')
+    const image = req.body;
+    const objectURL = URL.createObjectURL(image);
+    const [labels, logos] = await analyse_image(objectURL)
     //const chatResponse = await openaiAPI('prompt based on labels and stuff', ...)
 });
 

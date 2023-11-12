@@ -44,6 +44,6 @@ async function prompt_engineering() {
     return null;
 }
 
-analyse_image("../public/campus-map-1.jpg").then(data => data.forEach(datum => console.log(datum)));
+//analyse_image("../public/campus-map-1.jpg").then(data => data.forEach(datum => console.log(datum)));
 
 export { analyse_image };

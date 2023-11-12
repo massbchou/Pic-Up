@@ -16,14 +16,14 @@ function Home() {
         // Code to upload the selected file to the server goes here
         console.log('Selected file:', image);
         
-        /*if (!image) {
+        if (!image) {
           console.error('No image selected');
           return;
-        }*/
+        }
         
         try {
           const files = event.target;
-
+          console.log(files)
           const response = await fetch('/identify-image', {
           method: 'GET',
           headers: {'Content-Type': 'image'},
@@ -71,7 +71,7 @@ function Home() {
                         {/* <button type='submit'>Submit</button> */}
                         <NavLink to="/pic-info" className="" onClick={handleUploadButtonClick}>Submit</NavLink>
                     </div>
-                    <NavLink to="/pic-info" className="btn btn-lg btn-primary position-absolute bottom-0 end-0 m-5">Find a trash can</NavLink>
+                    <NavLink to="/map" className="btn btn-lg btn-primary position-absolute bottom-0 end-0 m-5">Find a trash can</NavLink>
                 </div>       
 
                 
