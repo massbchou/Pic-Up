@@ -36,6 +36,8 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage: storage });
 
+let image_path = '';
+
 // Endpoint for sending image to google api
 app.post('/identify-image', upload.single('image'), async (req, res) => {
     // request should contain the image in the data
@@ -49,6 +51,7 @@ app.post('/identify-image', upload.single('image'), async (req, res) => {
     }
     const uploadedImage = req.file;
     const imagePath = path.join(__dirname, '/uploads/' + uploadedImage.originalname);
+    image_path = imagePath;
 
     // Use google api to get labels and stuff from image
     const labels = await analyze.analyse_image(imagePath);
@@ -72,8 +75,7 @@ app.post('/identify-image', upload.single('image'), async (req, res) => {
 
 app.get('/read-file', async (req, res) => {
         // Read the contents of the JSON file
-
-        const jsonData = fs.readFile('src/info.json', (err, data) => {
+        fs.readFile('src/info.json', (err, data) => {
             if (err) {
                 res.status(500).end();
                 return;
@@ -81,6 +83,9 @@ app.get('/read-file', async (req, res) => {
             //console.log('data:', data);
             const d = JSON.parse(data);
             res.status(200).send(d).end();
+
+            // TODO: delete the file from local
+
             return;
         });
 

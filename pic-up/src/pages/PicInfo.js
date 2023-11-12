@@ -119,8 +119,13 @@ export default function PicInfo(props) {
     };
 
     if (fetchedData) {
+      console.log(fetchedData);
       trash = fetchedData.Item;
-      //recycle = fetchData.
+      recycle = fetchedData.Recyclable;
+      compost = fetchedData.Compostable;
+      reuse = fetchedData.Reusable;
+      points = fetchedData.Score;
+      description = fetchedData.Blurb;
     }
 
     return (
@@ -133,7 +138,7 @@ export default function PicInfo(props) {
         />
       </div>
       <div style={styles.itemContainer}>
-        <h2 style={styles.itemTitle}>Item: {trash}</h2>
+        <h2 style={styles.itemTitle}>{trash}</h2>
         <ul style={styles.itemList}>
           <li>{recycle}</li>
           <li>{compost}</li>

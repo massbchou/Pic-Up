@@ -1,3 +1,8 @@
+/**
+ * Take openai output and parse into json
+ * @param {string} inputString - String given by openai output
+ * @returns object as json
+ */
 function parseString(inputString) {
   // Split the string into pairs based on commas
   const pairs = inputString.split('\n');
