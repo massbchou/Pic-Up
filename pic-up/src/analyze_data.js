@@ -11,7 +11,8 @@ async function analyse_image(trash) {
     require('dotenv').config();
 
     // Specify the path to your service account key JSON file
-    const serviceAccountKeyFile = path.join(__dirname, GOOGLE_API_AUTHENTICATOR); // Update with your actual file path
+    console.log(__dirname)
+    const serviceAccountKeyFile = path.join('D:/Console Programs/JavaScript Programs/pic-up', 'pic-up-image-recognition-8e59b0d9c0fc.json'); // Update with your actual file path
 
     // Creates a client with the service account key
     const client = new vision.ImageAnnotatorClient({

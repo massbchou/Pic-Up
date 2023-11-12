@@ -4,7 +4,8 @@ const logger = require('morgan');
 const cors = require('cors')
 const path = require('path');
 const multer = require('multer');
-const upload = multer({ dest: 'uploads/' });
+//const upload = multer({ dest: 'uploads/' });
+const fs = require('fs');
 
 // import api functions
 //const { openaiAPI } = require('./src/chatbot');
@@ -24,6 +25,16 @@ app.use(cors());
 app.use('/', express.static('static'));
 app.use(express.static(path.join(__dirname, 'build')));
 
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './uploads')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname)
+    }
+})
+const upload = multer({ storage: storage })
+
 // Send to homescreen if any other endpoint reached
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
@@ -40,12 +51,12 @@ app.post('/identify-image', upload.single('image'), async (req, res) => {
         res.end();
         return;
     }
-    const uploadImage = req.file;
+    const uploadedImage = req.file;
     res.status(200).send("good job");
 
     // Use google api to get labels and stuff from image
-    const labels = await analyze.analyse_image(uploadImage.path + ".png");
-    console(labels);
+    const labels = await analyze.analyse_image(path.join(__dirname, '/uploads/' + uploadedImage.originalname));
+    console.log(labels);
 
     // Prompt engineer stuff based on labels
     //const chatResponse = await openaiAPI('prompt based on labels and stuff', ...)
