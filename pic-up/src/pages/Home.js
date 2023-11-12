@@ -29,39 +29,39 @@ function Home() {
     };
 
     const handleUploadButtonClick = async (event) => {
-      event.preventDefault();
-        // Code to upload the selected file to the server goes here
-        console.log('Selected file:', image);
+    //   event.preventDefault();
+    //     // Code to upload the selected file to the server goes here
+    //     console.log('Selected file:', image);
         
-        if (!image) {
-            console.error('No image selected');
-            return;
-        }
+    //     if (!image) {
+    //         console.error('No image selected');
+    //         return;
+    //     }
         
-        try {
-            console.log(image);
-            console.log(isGoodFile);
-            const formData = new FormData();
-            formData.append('image', image);
-            console.log("form data: ", formData);
-            console.log(URL.createObjectURL(image));
+    //     try {
+    //         console.log(image);
+    //         console.log(isGoodFile);
+    //         const formData = new FormData();
+    //         formData.append('image', image);
+    //         console.log("form data: ", formData);
+    //         console.log(URL.createObjectURL(image));
             
-            const response = await axios.post('/identify-image', { message }, {
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
-            if (response.status === 200) {
-            // Handle success, e.g., show a success message
-            console.log('Image successfully sent to /identify-image');
-            const data = response.data;
-            } else {
-            // Handle error, e.g., show an error message
-            console.error('Failed to send image to /identify-image');
-            }
-        } catch (error) {
-        console.error('Error:', error);
-        }
+    //         const response = await axios.post('/identify-image', { message }, {
+    //           headers: {
+    //             'Content-Type': 'application/json',
+    //           },
+    //         });
+    //         if (response.status === 200) {
+    //         // Handle success, e.g., show a success message
+    //         console.log('Image successfully sent to /identify-image');
+    //         const data = response.data;
+    //         } else {
+    //         // Handle error, e.g., show an error message
+    //         console.error('Failed to send image to /identify-image');
+    //         }
+    //     } catch (error) {
+    //     console.error('Error:', error);
+    //     }
         
     };
 
