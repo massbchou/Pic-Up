@@ -4,42 +4,65 @@ import logo from "../Icon_Black.svg"
 import title from "../Title_Black.svg"
 import camera from "../Camera_Black.svg"
 import '../Home.css';
+import axios from 'axios';
 
 function Home() {
-    const [image, setImage] = useState(null);
 
-    const handleFileInputChange = (event) => {
-        setImage(event.target.files[0]);
+    const [isGoodFile, setIsGoodFile] = useState(false);
+    const [image, setImage] = useState(null);
+    const validImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+
+    const handleFileInputChange = async (event) => {
+        const file = event.target.files[0];
+        await setImage(file);
+        console.log("image is ", image)
+        // if file is image, setIsGoodFile(true)
+        if (validImageTypes.includes(file.type)) {
+            // The file type is valid
+            console.log("File is gucci")
+            await setIsGoodFile(true);
+            } else {
+            // The file type is not valid
+            console.error('Invalid image type. Please choose a valid image file.');
+            await setIsGoodFile(false);
+            }
     };
 
     const handleUploadButtonClick = async (event) => {
+      event.preventDefault();
         // Code to upload the selected file to the server goes here
         console.log('Selected file:', image);
         
         if (!image) {
-          console.error('No image selected');
-          return;
+            console.error('No image selected');
+            return;
         }
         
         try {
-          const files = event.target;
-          console.log(files)
-          const response = await fetch('/identify-image', {
-          method: 'GET',
-          headers: {'Content-Type': 'image'},
-          body: null,
-        });
-        if (response.ok) {
-          // Handle success, e.g., show a success message
-          console.log('Image successfully sent to /identify-image');
-        } else {
-          // Handle error, e.g., show an error message
-          console.error('Failed to send image to /identify-image');
-        }
-      } catch (error) {
+            console.log(image);
+            console.log(isGoodFile);
+            const formData = new FormData();
+            formData.append('image', image);
+            console.log("form data: ", formData);
+            console.log(URL.createObjectURL(image));
+            
+            const response = await axios.post('/identify-image', { message }, {
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            if (response.status === 200) {
+            // Handle success, e.g., show a success message
+            console.log('Image successfully sent to /identify-image');
+            const data = response.data;
+            } else {
+            // Handle error, e.g., show an error message
+            console.error('Failed to send image to /identify-image');
+            }
+        } catch (error) {
         console.error('Error:', error);
-      }
-      
+        }
+        
     };
 
     return (
@@ -65,14 +88,18 @@ function Home() {
             <div className="body-container">
                 {/* <img src="/background.jpg" alt="background" class="h-100 w-100 position-absolute top-0 left-0 z-n1" /> */}
                 <div className="container text-center text-black">
-                    <div className="img-container"><img src={camera} height="200" class="mb-5"></img></div>
+                    <div className="img-container"><img src={image ? URL.createObjectURL(image) : camera} height="200" class="mb-5"></img></div>
                     <div className="input-container">
                         <input type="file" accept='image/*' class="mb-5" onChange={handleFileInputChange} />
                         {/* <button type='submit'>Submit</button> */}
-                        <NavLink to="/pic-info" className="" onClick={handleUploadButtonClick}>Submit</NavLink>
-                    </div>
+                        {isGoodFile ? (
+                            <button type="button" className="btn btn-lg btn-primary" onClick={() => handleUploadButtonClick()}>Submit</button>
+                        ) : (
+                            <button type="button" className="btn btn-lg btn-primary" disabled>Submit</button>
+                        )}
                     <NavLink to="/map" className="btn btn-lg btn-primary position-absolute bottom-0 end-0 m-5">Find a trash can</NavLink>
-                </div>       
+                </div>   
+                </div>    
 
                 
             </div>    

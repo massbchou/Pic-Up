@@ -28,14 +28,23 @@ app.get('*', (req, res) => {
 });
 
 // Endpoint for sending image to google api
-app.get('/identify-image', async (req, res) => {
+app.post('/identify-image', async (req, res) => {
     // request should contain the image in the data
     console.log(req.body);
     console.log('got something! (hopefully an image)');
-    const image = req.body;
-    const objectURL = URL.createObjectURL(image);
-    const [labels, logos] = await analyse_image(objectURL)
+    console.log(JSON.stringify(req.body) === JSON.stringify({}))
+    if (req.body === null || req.body === "" || JSON.stringify(req.body) === JSON.stringify({})) {
+        res.status(400).send("bad, very very bad");
+        console.log('not a valid file');
+        res.end();
+        return;
+    }
+    //const imageURL = req.body;
+    res.status(200).send("good job");
+    //const [labels, logos] = await analyse_image(imageURL)
+    //console(labels);
     //const chatResponse = await openaiAPI('prompt based on labels and stuff', ...)
+    res.end();
 });
 
 // Start server on port
