@@ -5,12 +5,31 @@ import title from "../Title_Black.svg"
 import camera from "../Camera_Black.svg"
 import '../Home.css';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
-
+    const history = useNavigate();
     const [isGoodFile, setIsGoodFile] = useState(false);
     const [image, setImage] = useState(null);
     const validImageTypes = ['image/jpg', 'image/jpeg', 'image/png'];
+    let goodResponse = false;
+    let responseData = {};
+
+    function parseString(inputString) {
+        // Split the string into pairs based on commas
+        const pairs = inputString.split('\n');
+    
+        // Create an empty object to store key-value pairs
+        const resultObject = {};
+    
+        // Iterate over each pair and split based on ':'
+        pairs.forEach(pair => {
+            //a = pair
+            const [key, value] = pair.split(': ');
+            resultObject[key] = pair;
+        });
+        return resultObject;
+    }
 
     const handleFileInputChange = async (event) => {
         const file = event.target.files[0];
@@ -48,9 +67,14 @@ function Home() {
             });
             console.log(response.data);
             if (response.status === 200) {
-            // Handle success, e.g., show a success message
-            console.log('Image successfully sent to /identify-image');
-            const data = response.data;
+                // Handle success, e.g., show a success message
+                console.log('Image successfully sent to /identify-image');
+                console.log(response);
+                const data = response.data;
+                goodResponse = true;
+                responseData = parseString(data);
+                console.log(responseData);
+                history('/pic-info', { imageData: data });
             } else {
             // Handle error, e.g., show an error message
             console.error('Failed to send image to /identify-image');
