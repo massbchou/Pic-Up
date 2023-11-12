@@ -75,11 +75,12 @@ async function prompt_GPT(information) {
     instructions =
     "Your task is to analyse pieces of litter/garbage, and briefly describe their environmental impact. " +
     "You will receive a description of a litter item in the form of a series of words which describe its properties, " +
-    "and the brand names present on the item." +
+    "and the brand names on the item." +
+    "Only analyse one item per prompt. " +
     "Your response should be formatted exactly like this, with all text in square brackets replaced:\n\n" +
-    "Item: [name of the item]\n[Recyclable or Non-Recyclable]\n[Compostable or Non-Compostable]\n[Reusable or Nonreusable]\n" +
+    "Item: [name of the item]\n[Recyclable or Non-Recyclable]\n[Compostable or Non-Compostable]\n[Reusable or Non-Reusable]\n" +
     "Score: [a number from 1-5, which represents how damaging the item is for the environment. 1 is least damaging, 5 is most damaging]\n" +
-    "Blurb: [A two or three sentence informational blurb which describes the effect this item has on the environment]";
+    "Blurb: [A two sentence informational blurb which describes the effect this item has on the environment]";
 
     return chatbot.openaiAPI(message, "chatSingular", instructions, 100, 1);
 }

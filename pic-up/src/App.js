@@ -1,5 +1,6 @@
 import React, { useState, useEffect} from "react"
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import useLocation from "react-router-dom"
 import Landing from './pages/Landing';
 import Home from './pages/Home'; 
 import Map from './pages/Map';

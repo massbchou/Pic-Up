@@ -74,6 +74,7 @@ function Home() {
                 goodResponse = true;
                 responseData = parseString(data);
                 console.log(responseData);
+                
                 history('/pic-info', { imageData: data });
             } else {
             // Handle error, e.g., show an error message

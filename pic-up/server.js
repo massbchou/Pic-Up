@@ -9,6 +9,7 @@ const fs = require('fs');
 
 // import api functions
 const analyze = require('./src/analyze_data');
+const helper = require('./src/helper');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -32,13 +33,8 @@ const storage = multer.diskStorage({
     filename: function (req, file, cb) {
       cb(null, file.originalname)
     }
-})
-const upload = multer({ storage: storage })
-
-// Send to homescreen if any other endpoint reached
-app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
+const upload = multer({ storage: storage });
 
 // Endpoint for sending image to google api
 app.post('/identify-image', upload.single('image'), async (req, res) => {
@@ -62,10 +58,37 @@ app.post('/identify-image', upload.single('image'), async (req, res) => {
     const chatResponse = await analyze.prompt_GPT(labels);
     console.log(chatResponse);
 
-    // Send the response back to the frontend as plaintext so it can move to the next screen and use it
-    // maybe separate the points so that way we can use it to add in localStorage???
-    res.type('text');
-    res.status(200).send(chatResponse).end();
+    const parsed = JSON.stringify(helper.parseString(chatResponse));
+
+    // Write response to file
+    fs.writeFile('src/info.json', parsed, (error) => {
+        if (error) {
+            console.error(error);
+        }
+    });
+    
+    res.status(200).end();
+});
+
+app.get('/read-file', async (req, res) => {
+        // Read the contents of the JSON file
+
+        const jsonData = fs.readFile('src/info.json', (err, data) => {
+            if (err) {
+                res.status(500).end();
+                return;
+            }
+            //console.log('data:', data);
+            const d = JSON.parse(data);
+            res.status(200).send(d).end();
+            return;
+        });
+
+});
+
+// Send to homescreen if any other endpoint reached
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 // Start server on port
