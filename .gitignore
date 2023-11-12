@@ -128,3 +128,43 @@ dist
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+venv/
+__pycache__/
+
+# Flask development server
+instance/
+.pytest_cache/
+
+# IDE files
+.vscode/
+.idea/
+
+# Compiled Python files
+*.pyc
+
+# Flask environment variables
+.env
+
+# Output of 'pip install'
+pip-log.txt
+
+# Flask cache and session files
+flask_cache/
+flask_session/
+
+# Flask assets
+static/assets/
+
+# myenv
+myenv/
