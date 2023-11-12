@@ -8,7 +8,6 @@ const multer = require('multer');
 const fs = require('fs');
 
 // import api functions
-//const { openaiAPI } = require('./src/chatbot');
 const analyze = require('./src/analyze_data');
 
 const app = express();
@@ -25,6 +24,7 @@ app.use(cors());
 app.use('/', express.static('static'));
 app.use(express.static(path.join(__dirname, 'build')));
 
+// all below gets the file as an image file and stores it locally
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, './uploads')
@@ -52,15 +52,18 @@ app.post('/identify-image', upload.single('image'), async (req, res) => {
         return;
     }
     const uploadedImage = req.file;
-    res.status(200).send("good job");
+    const imagePath = path.join(__dirname, '/uploads/' + uploadedImage.originalname);
 
     // Use google api to get labels and stuff from image
-    const labels = await analyze.analyse_image(path.join(__dirname, '/uploads/' + uploadedImage.originalname));
+    const labels = await analyze.analyse_image(imagePath);
     console.log(labels);
 
     // Prompt engineer stuff based on labels
+    const chatResponse = await analyze.prompt_GPT(labels);
     //const chatResponse = await openaiAPI('prompt based on labels and stuff', ...)
-    res.end();
+
+
+    res.status(200).send('success! good jobbbbbbbb niceee').end();
 });
 
 // Start server on port
