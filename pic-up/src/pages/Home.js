@@ -28,8 +28,7 @@ function Home() {
             }
     };
 
-    const handleUploadButtonClick = async (event) => {
-      event.preventDefault();
+    const handleUploadButtonClick = async () => {
         // Code to upload the selected file to the server goes here
         console.log('Selected file:', image);
         
@@ -37,20 +36,17 @@ function Home() {
             console.error('No image selected');
             return;
         }
-        
+
+        const formData = new FormData();
+        formData.append('image', image);
+    
         try {
-            console.log(image);
-            console.log(isGoodFile);
-            const formData = new FormData();
-            formData.append('image', image);
-            console.log("form data: ", formData);
-            console.log(URL.createObjectURL(image));
-            
-            const response = await axios.post('/identify-image', { message }, {
-              headers: {
-                'Content-Type': 'application/json',
-              },
+           const response = await axios.post('/identify-image', formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
             });
+            console.log(response.data);
             if (response.status === 200) {
             // Handle success, e.g., show a success message
             console.log('Image successfully sent to /identify-image');
