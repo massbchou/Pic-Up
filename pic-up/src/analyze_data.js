@@ -64,4 +64,4 @@ async function prompt_engineering() {
 
 //analyse_image("../public/campus-map-1.jpg").then(data => data.forEach(datum => console.log(datum.description + " (" + datum.score + ")")));
 
-export { analyse_image };
+module.exports = { analyse_image };

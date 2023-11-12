@@ -7,8 +7,8 @@ const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
 // import api functions
-//import { openaiAPI } from './src/chatbot';
-//import { analyse_image } from './src/analyze_data';
+//const { openaiAPI } = require('./src/chatbot');
+const analyze = require('./src/analyze_data');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -44,7 +44,7 @@ app.post('/identify-image', upload.single('image'), async (req, res) => {
     res.status(200).send("good job");
 
     // Use google api to get labels and stuff from image
-    const labels = await analyse_image(uploadImage.path + ".png")
+    const labels = await analyze.analyse_image(uploadImage.path + ".png");
     console(labels);
 
     // Prompt engineer stuff based on labels
