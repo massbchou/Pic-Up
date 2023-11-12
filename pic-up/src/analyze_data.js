@@ -1,4 +1,4 @@
-//const chatbot = require('./chatbot.js');
+const chatbot = require('./chatbot.js');
 
 /**
  * @async
@@ -78,10 +78,10 @@ async function prompt_GPT(information) {
     "and the brand names present on the item." +
     "Your response should be formatted exactly like this, with all text in square brackets replaced:\n\n" +
     "Item: [name of the item]\n [Recyclable or Non-Recyclable]\n [Compostable or Non-Compostable]\n\n" +
-    "[A two or three sentence informational blurb which describes the effect this item has on the environment]\n" +
-    "[a number from 1-5, which represents how damaging the item is for the environment. 1 is least damaging, 5 is most damaging]";
+    "Score: [a number from 1-5, which represents how damaging the item is for the environment. 1 is least damaging, 5 is most damaging]\n" +
+    "[A two or three sentence informational blurb which describes the effect this item has on the environment]";
 
-    //return chatbot.openaiAPI(message, "chatSingular", "echo the user's input", 64, 1);
+    return chatbot.openaiAPI(message, "chatSingular", instructions, 75, 1);
 }
 
 //analyse_image("../public/campus-map-1.jpg").then(data => data.forEach(datum => console.log(datum.description + " (" + datum.score + ")")));

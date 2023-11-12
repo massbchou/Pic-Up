@@ -60,8 +60,10 @@ app.post('/identify-image', upload.single('image'), async (req, res) => {
 
     // Prompt engineer stuff based on labels
     const chatResponse = await analyze.prompt_GPT(labels);
-    //const chatResponse = await openaiAPI('prompt based on labels and stuff', ...)
+    console.log(chatResponse);
 
+    // Send the response back to the frontend as plaintext so it can move to the next screen and use it
+    // maybe separate the points so that way we can use it to add in localStorage???
 
     res.status(200).send('success! good jobbbbbbbb niceee').end();
 });

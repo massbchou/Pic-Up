@@ -11,12 +11,12 @@ const openai = new OpenAI({
 });
 
 
-async function main() {
-    let s = await openaiAPI("Echo", "chatSingular", "Respond to the user's message with the same message.", 64, 1);
-    console.log(s);
-};
+// async function main() {
+//     let s = await openaiAPI("Echo", "chatSingular", "Respond to the user's message with the same message.", 64, 1);
+//     console.log(s);
+// };
 
-main();
+// main();
 
 
 //calls the openai api. Expects a String Prompt, a String type, Instruction is optional. maxTokens is optional and defaults to Infinity.
@@ -84,4 +84,6 @@ async function openaiAPI(inputPrompt, type, instruction, maxTokens, temperature)
 
 function constructMessageObj(role, content){
     return {"role": role, "content": content}
-  }
+}
+
+module.exports = { openaiAPI }
