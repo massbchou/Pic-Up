@@ -2,21 +2,48 @@ import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import logo from "../Icon_Black.svg"
 import title from "../Title_Black.svg"
+import camera from "../Camera_Black.svg"
+import '../Home.css';
 
 function Home() {
-    const [selectedFile, setSelectedFile] = useState(null);
+    const [image, setImage] = useState(null);
 
     const handleFileInputChange = (event) => {
-        setSelectedFile(event.target.files[0]);
+        setImage(event.target.files[0]);
     };
 
-    const handleUploadButtonClick = () => {
+    const handleUploadButtonClick = async (event) => {
         // Code to upload the selected file to the server goes here
-        console.log('Selected file:', selectedFile);
+        console.log('Selected file:', image);
+        
+        /*if (!image) {
+          console.error('No image selected');
+          return;
+        }*/
+        
+        try {
+          const files = event.target;
+
+          const response = await fetch('/identify-image', {
+          method: 'GET',
+          headers: {'Content-Type': 'image'},
+          body: null,
+        });
+        if (response.ok) {
+          // Handle success, e.g., show a success message
+          console.log('Image successfully sent to /identify-image');
+        } else {
+          // Handle error, e.g., show an error message
+          console.error('Failed to send image to /identify-image');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+      
     };
 
     return (
-        <div className="container-fluid text-center bg-body-secondary border-bottom border-black" id="container-header">
+        <div className="container-fluid text-center bg-body-secondary border-bottom border-black d-flex flex-column overflow-hidden" id="container-header">
             <div class="row pt-2">
 
             {/* <!-- this div holds the logo --> */}
@@ -35,15 +62,19 @@ function Home() {
 
             </div>
 
-            <div className="cover-container">
-                <img src="/background.jpg" alt="background" class="h-100 w-100 position-absolute top-0 left-0 z-n1" />
+            <div className="body-container">
+                {/* <img src="/background.jpg" alt="background" class="h-100 w-100 position-absolute top-0 left-0 z-n1" /> */}
                 <div className="container text-center text-black">
-                    
-                    <input type="file" onChange={handleFileInputChange} />
-                    <button onClick={handleUploadButtonClick}>Upload</button>
+                    <div className="img-container"><img src={camera} height="200" class="mb-5"></img></div>
+                    <div className="input-container">
+                        <input type="file" accept='image/*' class="mb-5" onChange={handleFileInputChange} />
+                        {/* <button type='submit'>Submit</button> */}
+                        <NavLink to="/pic-info" className="" onClick={handleUploadButtonClick}>Submit</NavLink>
+                    </div>
+                    <NavLink to="/pic-info" className="btn btn-lg btn-primary position-absolute bottom-0 end-0 m-5">Find a trash can</NavLink>
                 </div>       
 
-                <NavLink to="/map" className="btn btn-lg btn-primary position-absolute bottom-0 end-0 m-5">Find a trash can</NavLink>
+                
             </div>    
         </div>
     );

@@ -5,8 +5,8 @@ const cors = require('cors')
 const path = require('path');
 
 // import api functions
-import { openaiAPI } from './src/chatbot';
-import { analyse_image } from './src/analyze_data';
+//import { openaiAPI } from './src/chatbot';
+//import { analyse_image } from './src/analyze_data';
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -29,7 +29,11 @@ app.get('*', (req, res) => {
 
 // Endpoint for sending image to google api
 app.get('/identify-image', async (req, res) => {
-    console.log('got something! (an image)');
+    // request should contain the image in the data
+    console.log(req.body);
+    console.log('got something! (hopefully an image)');
+    //const [labels, logos] = await analyse_image('path')
+    //const chatResponse = await openaiAPI('prompt based on labels and stuff', ...)
 });
 
 // Start server on port

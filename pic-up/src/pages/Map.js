@@ -1,5 +1,5 @@
 import { NavLink } from 'react-router-dom';
-import '../Map.css';
+// import '../Map.css';
 
 function Map() {
     return (

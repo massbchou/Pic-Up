@@ -1,0 +1,22 @@
+.body-container {
+    width: auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+.img-container {
+    width: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input-container {
+    width: auto;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
