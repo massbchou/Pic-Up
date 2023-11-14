@@ -74,21 +74,35 @@ app.post('/identify-image', upload.single('image'), async (req, res) => {
 });
 
 app.get('/read-file', async (req, res) => {
-        // Read the contents of the JSON file
-        fs.readFile('src/info.json', (err, data) => {
-            if (err) {
-                res.status(500).end();
-                return;
-            }
-            //console.log('data:', data);
-            const d = JSON.parse(data);
-            res.status(200).send(d).end();
 
-            // TODO: delete the file from local
-
+    // If image path not set yet
+    if (image_path === '') {
+        console.log(`No file in path: ${image_path}`);
+        return;
+    }
+    
+    // Delete file after reading
+    fs.unlink(image_path, (err) => {
+        if (err) {
+            console.error(err);
+            res.status(500).end();
             return;
-        });
+        }
 
+        console.log('File deleted');
+    });
+
+    // Read the contents of the JSON file
+    fs.readFile('src/info.json', (err, data) => {
+        if (err) {
+            res.status(500).end();
+            return;
+        }
+        //console.log('data:', data);
+        const d = JSON.parse(data);
+        res.status(200).send(d).end();
+    });
+    
 });
 
 // Send to homescreen if any other endpoint reached
